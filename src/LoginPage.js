@@ -43,7 +43,7 @@ class LoginPage extends React.Component{
             <div>Password: <input type={"password"} value={this.state.password} onChange={(e)=>this.valueChanged("password",e)}/></div>
             <div><button onClick={this.login}>Login</button></div>
             {this.state.success&& "connection success"}
-            You don't have an account? <div style={{color:"blue"}} onClick={this.clicked}>sign up</div>  </div>: <div><SignPage/></div>
+            You don't have an account? <div style={{color:"blue"}} onClick={this.clicked}>sign up</div>  </div> : <div><SignPage/></div>
        }
 
         </div>)
