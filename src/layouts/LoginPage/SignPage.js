@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
+import LoginPage from "./LoginPage";
 
 class SignPage extends React.Component {
     state = {
@@ -9,7 +10,8 @@ class SignPage extends React.Component {
         repeatPassword: "",
         email: "",
         success: false,
-        error: ""
+        error: "",
+        hide:false
     };
 
     valueChanged = (key, e) => {
@@ -40,10 +42,13 @@ class SignPage extends React.Component {
                 this.setState({ error: "An error occurred. Please try again later." });
             });
     };
-
+    clicked = () => {
+        this.setState({ hide: true });
+    };
     render() {
         return (
             <div className="container mt-5">
+                {!this.state.hide ?(<div>
                 <h3>Sign Page</h3>
                 <form>
                     <div className="form-group row">
@@ -105,7 +110,9 @@ class SignPage extends React.Component {
                     </div>
                     {this.state.error && <div className="alert alert-danger">{this.state.error}</div>}
                     {this.state.success && <div className="alert alert-success">User is created</div>}
-                </form>
+                   back to login page? <div style={{ color: "blue", cursor: "pointer" }} onClick={this.clicked}>Login</div>
+                </form></div>):
+                    (<div><LoginPage/></div>)}
             </div>
         );
     }
