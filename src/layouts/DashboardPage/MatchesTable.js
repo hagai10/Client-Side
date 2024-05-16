@@ -32,10 +32,10 @@ function MatchesTable(props) {
                 <tbody>
                 {matches.map((match, index) => (
                     <tr key={index}>
-                        <td>{match[0]}</td>
-                        <td>{match[1]}</td>
-                        <td>{match[2]}</td>
-                        <td>{(match[3])}</td>
+                        <td>{match.id}</td>
+                        <td>{match.team1}</td>
+                        <td>{match.team2}</td>
+                        <td>{(match.date)}</td>
                     </tr>
                 ))}
                 </tbody>
