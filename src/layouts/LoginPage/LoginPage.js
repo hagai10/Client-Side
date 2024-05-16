@@ -1,98 +1,101 @@
-import React from "react";
+// LoginPage.js
+import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
+import { useNavigate } from 'react-router-dom';
 
-import SignPage from "./SignPage";
+function LoginPage() {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState("");
+    const [hide, setHide] = useState(false);
 
-class LoginPage extends React.Component {
-    state = {
-        username: "",
-        password: "",
-        success: false,
-        secret: "",
-        hide: false,
-        error: ""
+    const navigate = useNavigate();
+
+    const valueChanged = (key, e) => {
+        if (key === "username") {
+            setUsername(e.target.value);
+        } else if (key === "password") {
+            setPassword(e.target.value);
+        }
+        setSuccess(false);
+        setError("");
     };
 
-    valueChanged = (key, e) => {
-        this.setState({ [key]: e.target.value, success: false, error: "" });
-    };
-
-    login = () => {
+    const login = () => {
         axios
             .post("http://localhost:8080/login", null, {
                 params: {
-                    username: this.state.username,
-                    password: this.state.password
+                    username: username,
+                    password: password
                 }
             })
             .then(response => {
                 if (response.data.success) {
-                    this.setState({ success: true, error: "" });
+                    setSuccess(true);
+                    setError("");
                     const cookies = new Cookies(null, { path: "/" });
                     cookies.set("id", response.data.id);
                     cookies.set("secret", response.data.secret);
+                    navigate('/dashboard');
                 } else {
-                    this.setState({ error: response.data.message });
+                    setError(response.data.message);
                 }
             })
             .catch(error => {
-                this.setState({ error: "An error occurred. Please try again later." });
+                setError("An error occurred. Please try again later.");
             });
     };
 
-    clicked = () => {
-        this.setState({ hide: true });
+    const clicked = () => {
+        setHide(true);
     };
 
-    render() {
-        return (
-            <div className="container mt-5">
-                {!this.state.hide ? (
-                    <div>
-                        <h3>Login Page</h3>
-                        <form>
-                            <div className="form-group row">
-                                <label htmlFor="username" className="col-sm-2 col-form-label">User name:</label>
-                                <div className="col-sm-10">
-                                    <input
-                                        id="username"
-                                        className="form-control"
-                                        value={this.state.username}
-                                        onChange={e => this.valueChanged("username", e)}
-                                        required
-                                    />
-                                </div>
-                           </div>
-                            <div className="form-group row">
-                                <label htmlFor="password" className="col-sm-2 col-form-label">Password:</label>
-                                <div className="col-sm-10">
-                                    <input
-                                        id="password"
-                                        type="password"
-                                        className="form-control"
-                                        value={this.state.password}
-                                        onChange={e => this.valueChanged("password", e)}
-                                        required
-                                    />
-                                </div>
+    return (
+        <div className="container mt-5">
+            {!hide ? (
+                <div>
+                    <h3>Login Page</h3>
+                    <form>
+                        <div className="form-group row">
+                            <label htmlFor="username" className="col-sm-2 col-form-label">User name:</label>
+                            <div className="col-sm-10">
+                                <input
+                                    id="username"
+                                    className="form-control"
+                                    value={username}
+                                    onChange={e => valueChanged("username", e)}
+                                    required
+                                />
                             </div>
-                            <div className="form-group row">
-                                <div className="col-sm-10 offset-sm-2">
-                                    <button type="button" className="btn btn-primary" onClick={this.login}>Login</button>
-                                </div>
+                        </div>
+                        <div className="form-group row">
+                            <label htmlFor="password" className="col-sm-2 col-form-label">Password:</label>
+                            <div className="col-sm-10">
+                                <input
+                                    id="password"
+                                    type="password"
+                                    className="form-control"
+                                    value={password}
+                                    onChange={e => valueChanged("password", e)}
+                                    required
+                                />
                             </div>
-                        </form>
-                        {this.state.error && <div className="alert alert-danger">{this.state.error}</div>}
-                        {this.state.success && <div className="alert alert-success">Connection success</div>}
-                        You don't have an account? <div style={{ color: "blue", cursor: "pointer" }} onClick={this.clicked}>Sign up</div>
-                    </div>
-                ) : (
-                    <div><SignPage /></div>
-                )}
-            </div>
-        );
-    }
+                        </div>
+                        <div className="form-group row">
+                            <div className="col-sm-10 offset-sm-2">
+                                <button type="button" className="btn btn-primary" onClick={login}>Login</button>
+                            </div>
+                        </div>
+                    </form>
+                    {error && <div className="alert alert-danger">{error}</div>}
+                    {success && <div className="alert alert-success">Connection success</div>}
+                    You don't have an account? <div style={{ color: "blue", cursor: "pointer" }} onClick={clicked}>Click Here</div>
+                </div>
+            ) : null}
+        </div>
+    );
 }
 
 export default LoginPage;
