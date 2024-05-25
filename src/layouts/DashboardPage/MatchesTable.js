@@ -24,8 +24,8 @@ function MatchesTable(props) {
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Name Home Team</th>
-                    <th>name Other Team</th>
+                    <th>Home Team</th>
+                    <th>Visiting Team</th>
                     <th>Date</th>
                 </tr>
                 </thead>
@@ -33,8 +33,8 @@ function MatchesTable(props) {
                 {matches.map((match, index) => (
                     <tr key={index}>
                         <td>{match.id}</td>
-                        <td>{match.team1}</td>
-                        <td>{match.team2}</td>
+                        <td>{match.team1.name}</td>
+                        <td>{match.team2.name}</td>
                         <td>{(match.date)}</td>
                     </tr>
                 ))}
