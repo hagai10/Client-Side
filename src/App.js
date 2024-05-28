@@ -9,6 +9,7 @@ import UserPanel from './layouts/DashboardPage/UserPanel';
 import LoginPage from './layouts/LoginPage/LoginPage';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
+import BalanceUpdate from './layouts/DashboardPage/BalanceUpdate';
 
 function App() {
     const [user, setUser] = useState(null);
@@ -25,7 +26,6 @@ function App() {
                 params: { secret }
             }).then(response => {
                 setUser(response.data);
-                console.log('User fetched:', response.data);
             }).catch(() => {
                 setUser(null);
             });
@@ -44,8 +44,9 @@ function App() {
                 <Routes>
                     <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to="/login" />} />
                     <Route path="/user-panel" element={user ? <UserPanel /> : <Navigate to="/login" />} />
+                    <Route path="/balance-update" element={user ? <BalanceUpdate user={user} setUser={setUser} /> : <Navigate to="/login" />} />
                     <Route path="/login" element={!user ? <AuthenticationTabs setUser={setUser} /> : <Navigate to="/dashboard" />} />
-                    <Route path="/" element={user ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
+                    <Route path="/" element={<Navigate to="/dashboard" />} />
                 </Routes>
                 <Footer />
             </div>

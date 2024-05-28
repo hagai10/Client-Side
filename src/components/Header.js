@@ -1,4 +1,3 @@
-// Header.js
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -16,6 +15,10 @@ function Header({ user, logout }) {
                         <div className="d-flex align-items-center">
                             <span className="me-3">
                                 Welcome, <Link to="/user-panel" className="text-decoration-none">{user.username}</Link>
+                                <br />
+                                <Link to="/balance-update" className="text-decoration-none">
+                                    Balance: ${user.balance !== undefined ? user.balance.toFixed(2) : 'N/A'}
+                                </Link>
                             </span>
                             <button className="btn btn-danger" onClick={logout}>Logout</button>
                         </div>
