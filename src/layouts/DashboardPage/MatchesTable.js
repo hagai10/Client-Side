@@ -13,6 +13,8 @@ function MatchesTable(props) {
             .get("http://localhost:8080/get-matches")
             .then((response) => {
                 setMatches(response.data);
+                console.log('Matches fetched:', response.data)
+                console.log(matches)
             })
             .catch((error) => {
                 console.error("Error fetching matches:", error);
@@ -33,8 +35,8 @@ function MatchesTable(props) {
                 {matches.map((match, index) => (
                     <tr key={index}>
                         <td>{match.id}</td>
-                        <td>{match.team1}</td>
-                        <td>{match.team2}</td>
+                        {/*<td>{match.team1.name}</td>*/}
+                        {/*<td>{match.team2.name}</td>*/}
                         <td>{(match.date)}</td>
                     </tr>
                 ))}
