@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import TeamsTable from './TeamsTable';
 import MatchesTable from './MatchesTable';
 import BettingTable from './BettingTable';
+import UserPanel from './UserPanel';
 
 function Dashboard() {
     const [activeTab, setActiveTab] = useState('Teams');
@@ -37,11 +38,20 @@ function Dashboard() {
                         Betting
                     </button>
                 </li>
+                <li className="nav-item">
+                    <button
+                        className={`nav-link ${activeTab === 'User' ? 'active' : ''}`}
+                        onClick={() => handleTabClick('User')}
+                    >
+                        User
+                    </button>
+                </li>
             </ul>
             <div className="tab-content">
                 {activeTab === 'Teams' && <TeamsTable />}
                 {activeTab === 'Matches' && <MatchesTable />}
                 {activeTab === 'Betting' && <BettingTable />}
+                {activeTab === 'User' && <UserPanel />}
             </div>
         </div>
     );

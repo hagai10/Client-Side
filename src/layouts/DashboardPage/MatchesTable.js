@@ -33,8 +33,8 @@ function MatchesTable(props) {
                 {matches.map((match, index) => (
                     <tr key={index}>
                         <td>{match.id}</td>
-                        <td>{match.team1.name}</td>
-                        <td>{match.team2.name}</td>
+                        <td>{match.team1}</td>
+                        <td>{match.team2}</td>
                         <td>{(match.date)}</td>
                     </tr>
                 ))}

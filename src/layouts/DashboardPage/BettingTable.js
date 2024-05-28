@@ -1,17 +1,23 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
+import Cookies from "universal-cookie";
 
 function BettingTable(props) {
+    const cookies = new Cookies();
 
     useEffect(() => {
         fetchMyBetting();
-    }, [])
+    }, []);
 
     const [myBetting, setMyBetting] = useState([]);
 
     const fetchMyBetting = () => {
         axios
-            .get("http://localhost:8080/get-betting")
+            .get("http://localhost:8080/get-betting", {
+                params: {
+                    secret: cookies.get("secret")
+                }
+            })
             .then((response) => {
                 setMyBetting(response.data);
             })
@@ -19,6 +25,7 @@ function BettingTable(props) {
                 console.error("Error fetching my betting data:", error);
             });
     };
+
     return (
         <div>
             <table className="table table-striped">
