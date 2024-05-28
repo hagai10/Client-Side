@@ -1,7 +1,8 @@
+// LoginPage.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
-import { useNavigate } from 'react-router-dom';
 
 function LoginPage({ onLoginSuccess }) {
     const [username, setUsername] = useState('');
@@ -16,16 +17,20 @@ function LoginPage({ onLoginSuccess }) {
             const response = await axios.post('http://localhost:8080/login', null, {
                 params: { username, password }
             });
+            console.log('Response from server:', response.data);
             if (response.data.success && response.data.secret) {
                 const { secret, id } = response.data;
                 cookies.set('secret', secret, { path: '/' });
-                onLoginSuccess({ id });
+                onLoginSuccess({ username, id }); // נעדכן את המשתמש עם שם המשתמש ו-id
+                console.log('Login successful, navigating to dashboard');
                 navigate('/dashboard');
             } else {
                 setError('Invalid username or password.');
+                console.error('Login error: No secret returned from server', response.data);
             }
         } catch (error) {
             setError('Login failed. Please check your username and password.');
+            console.error('Login error:', error);
         }
     };
 
@@ -42,7 +47,7 @@ function LoginPage({ onLoginSuccess }) {
                     <input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} required />
                 </div>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
-                <button type="submit" className="btn-primary">Login</button>
+                <button type="submit" className="btn btn-primary">Login</button>
             </form>
         </div>
     );
