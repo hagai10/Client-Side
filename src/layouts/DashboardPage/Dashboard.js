@@ -3,6 +3,7 @@ import TeamsTable from './TeamsTable';
 import MatchesTable from './MatchesTable';
 import BettingTable from './BettingTable';
 import UserPanel from './UserPanel';
+import OldMatchesTable from "./OldMatchesTable";
 
 function Dashboard() {
     const [activeTab, setActiveTab] = useState('Teams');
@@ -40,6 +41,14 @@ function Dashboard() {
                 </li>
                 <li className="nav-item">
                     <button
+                        className={`nav-link ${activeTab === 'Finished games' ? 'active' : ''}`}
+                        onClick={() => handleTabClick('Finished games')}
+                    >
+                        Finished games
+                    </button>
+                </li>
+                <li className="nav-item">
+                    <button
                         className={`nav-link ${activeTab === 'User' ? 'active' : ''}`}
                         onClick={() => handleTabClick('User')}
                     >
@@ -51,6 +60,7 @@ function Dashboard() {
                 {activeTab === 'Teams' && <TeamsTable />}
                 {activeTab === 'Matches' && <MatchesTable />}
                 {activeTab === 'Betting' && <BettingTable />}
+                {activeTab === 'Finished games' && <OldMatchesTable/>}
                 {activeTab === 'User' && <UserPanel />}
             </div>
         </div>

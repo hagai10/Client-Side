@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 
-function MatchesTable(props) {
+function OldMatchesTable(props) {
     const [matches, setMatches] = useState([]);
 
     useEffect(() => {
@@ -10,7 +10,7 @@ function MatchesTable(props) {
 
     const fetchMatches = () => {
         axios
-            .get("http://localhost:8080/get-matches")
+            .get("http://localhost:8080/get-old-matches")
             .then((response) => {
                 setMatches(response.data);
             })
@@ -28,9 +28,8 @@ function MatchesTable(props) {
                     <th>Date</th>
                     <th>Home Team</th>
                     <th>Visiting Team</th>
-                    <th>1</th>
-                    <th>x</th>
-                    <th>2</th>
+                    <th>result</th>
+
 
                 </tr>
                 </thead>
@@ -42,9 +41,7 @@ function MatchesTable(props) {
                         <td>{(match.date)}</td>
                         <td>{match.team1.name}</td>
                         <td>{match.team2.name}</td>
-                        <td>{match.oddsTeam1}</td>
-                        <td>{match.oddsDraw}</td>
-                        <td>{match.oddsTeam2}</td>
+                        <td>{match.resultTeam1} : {match.resultTeam2}</td>
 
                     </tr>
                 ))}
@@ -54,4 +51,4 @@ function MatchesTable(props) {
     );
 }
 
-export default MatchesTable;
+export default OldMatchesTable;
