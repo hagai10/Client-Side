@@ -18,6 +18,9 @@ function MatchesTable(props) {
                 console.error("Error fetching matches:", error);
             });
     };
+    const letsBet = () => {
+
+    };
     return (
         <div>
             <table className="table table-striped">
@@ -45,6 +48,8 @@ function MatchesTable(props) {
                         <td>{match.oddsTeam1}</td>
                         <td>{match.oddsDraw}</td>
                         <td>{match.oddsTeam2}</td>
+                        <td><button onClick={letsBet}>bet</button></td>
+
 
                     </tr>
                 ))}
