@@ -14,12 +14,12 @@ function BalanceUpdate({ user, setUser }) {
             const response = await axios.post('http://localhost:8080/update-balance', null, {
                 params: {
                     secret: cookies.get('secret'),
-                    newBalance
+                    balanceToAdd: newBalance
                 }
             });
 
             if (response.data.success) {
-                setUser(prevUser => ({ ...prevUser, balance: parseFloat(newBalance) }));
+                setUser(prevUser => ({ ...prevUser, balance: parseFloat(response.data.user.balance) }));
                 navigate('/dashboard');
             } else {
                 setError('Failed to update balance');
