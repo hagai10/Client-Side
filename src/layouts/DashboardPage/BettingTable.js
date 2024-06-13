@@ -31,17 +31,23 @@ function BettingTable(props) {
             <table className="table table-striped">
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Score</th>
+                    <th>Num</th>
+                    <th>Date</th>
+                    <th>Home Team</th>
+                    <th>Visiting Team</th>
+                    <th>Sum</th>
+                    <th>Winner</th>
                 </tr>
                 </thead>
                 <tbody>
                 {myBetting.map((bet, index) => (
                     <tr key={index}>
-                        <td>{bet.id}</td>
-                        <td>{bet.name}</td>
-                        <td>{bet.score}</td>
+                        <td>{index+1}</td>
+                        <td>{bet.match.date}</td>
+                        <td>{bet.match.team1.name}</td>
+                        <td>{bet.match.team2.name}</td>
+                        <td>{bet.sumOfBet}</td>
+                        <td>{bet.result}</td>
                     </tr>
                 ))}
                 </tbody>
