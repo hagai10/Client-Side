@@ -48,7 +48,7 @@ function MatchesTable(props) {
                         <td>{match.oddsTeam1}</td>
                         <td>{match.oddsDraw}</td>
                         <td>{match.oddsTeam2}</td>
-                        <td><button onClick={letsBet}>bet</button></td>
+                        <td><button className="btn btn-primary" onClick={letsBet}>bet</button></td>
 
 
                     </tr>

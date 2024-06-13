@@ -1,4 +1,3 @@
-// LoginPage.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -19,9 +18,12 @@ function LoginPage({ onLoginSuccess }) {
             });
             console.log('Response from server:', response.data);
             if (response.data.success && response.data.secret) {
-                const { secret, id } = response.data;
+                const { secret } = response.data;
                 cookies.set('secret', secret, { path: '/' });
-                onLoginSuccess({ username, id }); // נעדכן את המשתמש עם שם המשתמש ו-id
+                const userResponse = await axios.post('http://localhost:8080/get-user', null, {
+                    params: { secret }
+                });
+                onLoginSuccess(userResponse.data);
                 console.log('Login successful, navigating to dashboard');
                 navigate('/dashboard');
             } else {
