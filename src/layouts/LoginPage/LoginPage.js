@@ -1,3 +1,4 @@
+// LoginPage.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -20,10 +21,12 @@ function LoginPage({ onLoginSuccess }) {
             if (response.data.success && response.data.secret) {
                 const { secret } = response.data;
                 cookies.set('secret', secret, { path: '/' });
+                // Fetch user details to include balance
                 const userResponse = await axios.post('http://localhost:8080/get-user', null, {
                     params: { secret }
                 });
-                onLoginSuccess(userResponse.data);
+                const user = userResponse.data;
+                onLoginSuccess(user);
                 console.log('Login successful, navigating to dashboard');
                 navigate('/dashboard');
             } else {
