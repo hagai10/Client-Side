@@ -3,7 +3,7 @@ import axios from 'axios';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { parse } from 'date-fns';
 
-function MatchesTable() {
+function LiveTable() {
     const [matches, setMatches] = useState([]);
     const [timers, setTimers] = useState({});
     const timersRef = useRef({});
@@ -15,25 +15,29 @@ function MatchesTable() {
     useEffect(() => {
         const interval = setInterval(() => {
             const newTimers = { ...timersRef.current };
-            Object.keys(newTimers).forEach((key) => {
-                if (newTimers[key].timeLeft > 0 && newTimers[key].start) {
-                    newTimers[key].timeLeft -= 1;
-                } else if (newTimers[key].timeLeft === 0) {
-                    newTimers[key].start = false; // Stop the timer when it reaches 0
+            const updatedMatches = matches.filter((match, index) => {
+                if (newTimers[index].timeLeft > 0 && newTimers[index].start) {
+                    newTimers[index].timeLeft -= 1;
+                    return true;
+                } else if (newTimers[index].timeLeft === 0) {
+                    newTimers[index].start = false; // Stop the timer when it reaches 0
+                    return false; // Remove match from live table
                 } else {
                     const now = new Date();
-                    const matchDate = newTimers[key].date;
+                    const matchDate = newTimers[index].date;
                     if (now >= matchDate) {
-                        newTimers[key].start = true;
+                        newTimers[index].start = true;
                     }
+                    return true;
                 }
             });
             timersRef.current = newTimers;
             setTimers({ ...newTimers });
+            setMatches(updatedMatches);
         }, 1000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [matches]);
 
     const fetchMatches = () => {
         axios
@@ -67,9 +71,9 @@ function MatchesTable() {
                                 <h2>{match.resultTeam1} - {match.resultTeam2}</h2>
                                 {timers[index] && (
                                     <span className="badge badge-pill badge-warning p-2 mt-2" style={{ fontSize: '1.2rem' }}>
-                    <i className="fas fa-clock mr-2"></i>
+                                        <i className="fas fa-clock mr-2"></i>
                                         {timers[index].start ? `${timers[index].timeLeft}s` : 'Awaiting match start'}
-                  </span>
+                                    </span>
                                 )}
                             </div>
                             <div className="text-right">
@@ -87,4 +91,4 @@ function MatchesTable() {
     );
 }
 
-export default MatchesTable;
+export default LiveTable;
