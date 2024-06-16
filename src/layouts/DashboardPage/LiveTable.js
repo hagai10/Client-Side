@@ -14,6 +14,9 @@ function LiveTable() {
 
     useEffect(() => {
         const interval = setInterval(() => {
+            // Fetch updated matches every second
+            fetchUpdatedMatches();
+
             const newTimers = { ...timersRef.current };
             const updatedMatches = matches.filter((match, index) => {
                 if (newTimers[index].timeLeft > 0 && newTimers[index].start) {
@@ -54,6 +57,17 @@ function LiveTable() {
             })
             .catch((error) => {
                 console.error("Error fetching matches:", error);
+            });
+    };
+
+    const fetchUpdatedMatches = () => {
+        axios
+            .get("http://localhost:8080/get-matches")  // Changed to get-old-matches
+            .then((response) => {
+                setMatches(response.data);
+            })
+            .catch((error) => {
+                console.error("Error fetching updated matches:", error);
             });
     };
 
