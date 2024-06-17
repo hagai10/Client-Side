@@ -26,6 +26,7 @@ function TeamsTable(props) {
                     <th>ID</th>
                     <th>Name</th>
                     <th>Score</th>
+                    <th>Goals</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -34,6 +35,7 @@ function TeamsTable(props) {
                         <td>{team.id}</td>
                         <td>{team.name}</td>
                         <td>{team.score}</td>
+                        <td>{team.goalsConcedes} : {team.goalsScored}</td>
                     </tr>
                 ))}
                 </tbody>
