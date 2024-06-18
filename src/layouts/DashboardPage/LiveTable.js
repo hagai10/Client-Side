@@ -19,10 +19,10 @@ function LiveTable() {
 
             const newTimers = { ...timersRef.current };
             const updatedMatches = matches.filter((match, index) => {
-                if (newTimers[index].timeLeft > 0 && newTimers[index].start) {
-                    newTimers[index].timeLeft -= 1;
+                if (newTimers[index].currentTimer < 30  && newTimers[index].start) {
+                    newTimers[index].currentTimer += 1;
                     return true;
-                } else if (newTimers[index].timeLeft === 0) {
+                } else if (newTimers[index].currentTimer > 30) {
                     newTimers[index].start = false; // Stop the timer when it reaches 0
                     return false; // Remove match from live table
                 } else {
@@ -49,7 +49,7 @@ function LiveTable() {
                 setMatches(response.data);
                 const initialTimers = response.data.reduce((acc, match, index) => {
                     const matchDate = parse(match.date, 'dd/MM/yy HH:mm:ss', new Date());
-                    acc[index] = { timeLeft: 30, start: false, date: matchDate };
+                    acc[index] = { currentTimer:0, start: false, date: matchDate };
                     return acc;
                 }, {});
                 timersRef.current = initialTimers;
@@ -86,7 +86,7 @@ function LiveTable() {
                                 {timers[index] && (
                                     <span className="badge badge-pill badge-warning p-2 mt-2" style={{ fontSize: '1.2rem' }}>
                                         <i className="fas fa-clock mr-2"></i>
-                                        {timers[index].start ? `${timers[index].timeLeft}s` : 'Awaiting match start'}
+                                        {timers[index].start ? `${timers[index].currentTimer}s` : 'Awaiting match start'}
                                     </span>
                                 )}
                             </div>
