@@ -23,7 +23,7 @@ function TeamsTable(props) {
             <table className="table table-striped">
                 <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Num</th>
                     <th>Name</th>
                     <th>Score</th>
                     <th>Goals</th>
@@ -32,7 +32,7 @@ function TeamsTable(props) {
                 <tbody>
                 {teams.map((team, index) => (
                     <tr key={index}>
-                        <td>{team.id}</td>
+                        <td>{index+1}</td>
                         <td>{team.name}</td>
                         <td>{team.score}</td>
                         <td>{team.goalsConcedes} : {team.goalsScored}</td>
