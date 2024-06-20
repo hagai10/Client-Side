@@ -44,7 +44,7 @@ function LiveTable() {
 
     const fetchMatches = () => {
         axios
-            .get("http://localhost:8080/get-matches")
+            .get("http://localhost:8080/get-live-match")
             .then((response) => {
                 setMatches(response.data);
                 const initialTimers = response.data.reduce((acc, match, index) => {
@@ -62,7 +62,7 @@ function LiveTable() {
 
     const fetchUpdatedMatches = () => {
         axios
-            .get("http://localhost:8080/get-matches")  // Changed to get-old-matches
+            .get("http://localhost:8080/get-live-match")  // Changed to get-old-matches
             .then((response) => {
                 setMatches(response.data);
             })

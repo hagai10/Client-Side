@@ -18,7 +18,7 @@ function MatchesTable({ user, setUser }) {
     }, []);
 
     const fetchMatches = () => {
-        axios.get("http://localhost:8080/get-matches")
+        axios.get("http://localhost:8080/get-available-matches")
             .then(response => {
                 setMatches(response.data);
             })
