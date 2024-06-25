@@ -18,7 +18,11 @@ function MatchesTable({ user, setUser }) {
     }, []);
 
     const fetchMatches = () => {
-        axios.get("http://localhost:8080/get-available-matches")
+        axios.post("http://localhost:8080/get-matches-by-type",null,{
+                params:{
+                    type: "available"
+                }
+            })
             .then(response => {
                 setMatches(response.data);
             })

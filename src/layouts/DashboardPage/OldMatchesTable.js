@@ -9,8 +9,11 @@ function OldMatchesTable(props) {
     }, [])
 
     const fetchMatches = () => {
-        axios
-            .get("http://localhost:8080/get-old-matches")
+        axios.post("http://localhost:8080/get-matches-by-type",null,{
+                params:{
+                    type: "old"
+                }
+            })
             .then((response) => {
                 setMatches(response.data);
             })

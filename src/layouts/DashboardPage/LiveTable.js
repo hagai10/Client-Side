@@ -43,8 +43,12 @@ function LiveTable() {
     }, [matches]);
 
     const fetchMatches = () => {
-        axios
-            .get("http://localhost:8080/get-live-match")
+        axios.post("http://localhost:8080/get-matches-by-type",null,{
+                params:{
+                    type: "live"
+                }
+                }
+               )
             .then((response) => {
                 setMatches(response.data);
                 const initialTimers = response.data.reduce((acc, match, index) => {
@@ -61,8 +65,11 @@ function LiveTable() {
     };
 
     const fetchUpdatedMatches = () => {
-        axios
-            .get("http://localhost:8080/get-live-match")  // Changed to get-old-matches
+        axios.post("http://localhost:8080/get-matches-by-type",null,{
+                params:{
+                    type: "live"
+                }
+            })
             .then((response) => {
                 setMatches(response.data);
             })
