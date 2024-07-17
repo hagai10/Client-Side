@@ -45,7 +45,7 @@ function App() {
                     <Route path="/dashboard" element={user ? <Dashboard user={user} setUser={setUser} /> : <Navigate to="/login" />} />
                     <Route path="/user-panel" element={user ? <UserPanel /> : <Navigate to="/login" />} />
                     <Route path="/balance-update" element={user ? <BalanceUpdate user={user} setUser={setUser} /> : <Navigate to="/login" />} />
-                    <Route path="/login" element={!user ? <LoginPage onLoginSuccess={setUser} /> : <Navigate to="/dashboard" />} />
+                    <Route path="/login" element={!user ? <AuthenticationTabs onLoginSuccess={setUser} /> : <Navigate to="/dashboard" />} />
                     <Route path="/" element={<Navigate to="/dashboard" />} />
                 </Routes>
                 <Footer />
