@@ -1,4 +1,3 @@
-// LoginPage.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -26,9 +25,11 @@ function LoginPage({ onLoginSuccess }) {
                     params: { secret }
                 });
                 const user = userResponse.data;
+                console.log('User data:', user);
                 onLoginSuccess(user);
                 console.log('Login successful, navigating to dashboard');
-                navigate('/dashboard');
+                setError(''); // Clear any previous errors
+                navigate('/dashboard'); // Navigate to dashboard on successful login
             } else {
                 setError('Invalid username or password.');
                 console.error('Login error: No secret returned from server', response.data);
