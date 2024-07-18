@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
-function SignUpPage() {
+function SignUpPage({ onLoginSuccess }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
+    const navigate = useNavigate();
+    const cookies = new Cookies();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -22,6 +26,8 @@ function SignUpPage() {
             if (response.data.success) {
                 setSuccess(true);
                 setError('');
+                // Attempt to login after successful sign up
+                await handleLogin(username, password);
             } else {
                 setError('Sign up failed. Error code: ' + response.data.errorCode);
                 setSuccess(false);
@@ -29,6 +35,28 @@ function SignUpPage() {
         } catch (error) {
             setError('Sign up failed. Please try again later.');
             setSuccess(false);
+        }
+    };
+
+    const handleLogin = async (username, password) => {
+        try {
+            const response = await axios.post('http://localhost:8080/login', null, {
+                params: { username, password }
+            });
+            if (response.data.success && response.data.secret) {
+                const { secret } = response.data;
+                cookies.set('secret', secret, { path: '/' });
+                const userResponse = await axios.post('http://localhost:8080/get-user', null, {
+                    params: { secret }
+                });
+                const user = userResponse.data;
+                onLoginSuccess(user);
+                navigate('/dashboard'); // Navigate to dashboard on successful login
+            } else {
+                setError('Login after sign up failed. Please try to login manually.');
+            }
+        } catch (error) {
+            setError('Login after sign up failed. Please try to login manually.');
         }
     };
 
@@ -53,7 +81,7 @@ function SignUpPage() {
                     <input type="email" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} required />
                 </div>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
-                {success && <p style={{ color: 'green' }}>Sign up successful!</p>}
+                {success && <p style={{ color: 'green' }}>Sign up successful! Redirecting...</p>}
                 <button type="submit" className="btn-primary">Sign Up</button>
             </form>
         </div>
