@@ -38,7 +38,7 @@ function AuthenticationTabs({ setUser }) {
                     <LoginPage onLoginSuccess={handleLoginSuccess} />
                 </div>
                 <div className={`tab-pane fade ${activeTab === 'signup' ? 'show active' : ''}`} id="signup" role="tabpanel">
-                    <SignUpPage />
+                    <SignUpPage onLoginSuccess={handleLoginSuccess} />
                 </div>
             </div>
         </div>
