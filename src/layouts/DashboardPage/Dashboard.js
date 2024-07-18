@@ -1,4 +1,3 @@
-// Dashboard.js
 import React, { useState, useEffect } from 'react';
 import TeamsTable from './TeamsTable';
 import MatchesTable from './MatchesTable';
