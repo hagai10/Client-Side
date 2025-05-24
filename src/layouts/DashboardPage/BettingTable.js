@@ -37,7 +37,6 @@ function BettingTable(props) {
                     <th>Visiting Team</th>
                     <th>Sum</th>
                     <th>Winner</th>
-                    <th>winning amount</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -49,7 +48,6 @@ function BettingTable(props) {
                         <td>{bet.match.team2.name}</td>
                         <td>{bet.sumOfBet}</td>
                         <td>{bet.result}</td>
-                        <td>{(bet.sumOfBet*bet.winRatio).toFixed(2)}</td>
                     </tr>
                 ))}
                 </tbody>
