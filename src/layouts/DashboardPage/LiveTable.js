@@ -93,7 +93,7 @@ function LiveTable() {
                                 {timers[index] && (
                                     <span className="badge badge-pill badge-warning p-2 mt-2" style={{ fontSize: '1.2rem' }}>
                                         <i className="fas fa-clock mr-2"></i>
-                                        {match.time>0 ? match.time+'s' : 'Awaiting match start'}
+                                        {match.time< 0 ? ' Awaiting match start' : match.time<30 ? match.time : ' Game over'}
                                     </span>
                                 )}
                             </div>
